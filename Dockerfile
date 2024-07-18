@@ -5,11 +5,9 @@ FROM node:20
 WORKDIR /app
 
 # Install dependencies
-COPY package.json ./
+COPY package*.json ./
 
-COPY package-lock.json ./
-
-RUN npm install --production
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
