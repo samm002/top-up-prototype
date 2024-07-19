@@ -21,6 +21,15 @@ interface orderInterface {
   updatedAt: Date;
 }
 
+interface transactionInterface {
+  orderId?: string;
+  status?: string;
+  amount?: number;
+  paymentMethod?: string;
+  paymentChannel?: string;
+  paymentTime?: Date;
+}
+
 interface TopUpResponseDetailInterface {
   trxid: string;
   data: string;
@@ -41,6 +50,7 @@ interface TopUpResponseInterface {
 export {
   productInterface,
   orderInterface,
+  transactionInterface,
   TopUpResponseInterface,
 }
 

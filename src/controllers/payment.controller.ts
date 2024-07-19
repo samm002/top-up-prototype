@@ -3,6 +3,7 @@ import { Invoice as InvoiceClient } from 'xendit-node';
 import mongoose from "mongoose";
 
 import { XENDIT_API_KEY } from "@/utils/env";
+import { transactionInterface } from "@/utils/interface"
 import { transactionValidation } from "@/utils/validator";
 import vipaymentController from "./vipayment.controller";
 import Product from "@/models/products.model";
@@ -121,5 +122,54 @@ export default {
         detail: err.message,
       });
     }
-  }
+  },
+  async getAll(req: Request, res: Response) {
+    const query: transactionInterface = {};
+
+    if (req.query.order) {
+      query.orderId = req.query.order as string;
+    }
+
+    try {
+      const transactions = await Transaction.find(query);
+
+      res.status(200).json({
+        message: "Get all transaction success",
+        data: transactions,
+      });
+    } catch (error) {
+      const err = error as Error;
+
+      res.status(500).json({
+        message: "Get all transaction failed",
+        error: err.message,
+      });
+    }
+  },
+  async getById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const transaction = await Transaction.findById(id);
+
+      if (!transaction) {
+        return res.status(404).json({
+          message: "Get transaction by id failed",
+          error: `transaction with id ${id} not found`,
+        });
+      }
+
+      res.status(200).json({
+        message: "Get transaction by id success",
+        data: transaction,
+      });
+    } catch (error) {
+      const err = error as Error;
+
+      res.status(500).json({
+        message: "Get product by id failed",
+        error: err.message,
+      });
+    }
+  },
 }

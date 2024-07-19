@@ -15,6 +15,9 @@ router.post("/orders", orderController.create);
 router.get("/orders", orderController.getAll);
 router.get("/orders/:id", orderController.getById);
 
+router.get("/transactions", paymentController.getAll);
+router.get("/transactions/:idy", paymentController.getById);
+
 router.post("/orders/:id/pay", paymentController.create);
 router.post("/payment-success", paymentController.callback);
 

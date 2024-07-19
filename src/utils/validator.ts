@@ -14,6 +14,7 @@ const productValidation = Yup.object().shape({
 const orderValidation = Yup.object().shape({
   transactionId: objectIdValidation.nullable(),
   vipaymentId: Yup.string().nullable(),
+  email: Yup.string().email().required(),
   gameId: Yup.string().required(),
   product: objectIdValidation.required(),
   status: Yup.string().oneOf(["pending", "completed", "cancelled"]).default("pending"),
