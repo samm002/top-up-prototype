@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { TopUpResponseInterface } from "@/utils/interface";
 import { VIPAYMENT_KEY, VIPAYMENT_SIGN  } from "@/utils/env";
@@ -62,12 +62,20 @@ export default {
   
       return response.data;
     } catch (error) {
-      const err = error as Error;
+      // const err = error as Error;
 
-      console.error("error :", err.message);
-      console.error("error done");
+      // console.error("error :", err.message);
+      // console.error("error done");
 
-      throw new Error(err.message);
+      // throw new Error(err.message);
+
+      const err = error as AxiosError;
+      console.error("Error response data:", err.response?.data);
+      console.error("Error response status:", err.response?.status);
+      console.error("Error response headers:", err.response?.headers);
+      console.error("Error message:", err.message);
+      
+  throw new Error(err.message);
     }
   }
 }
