@@ -25,8 +25,6 @@ app.get("/", async (req: express.Request, res: express.Response) => {
   }
 });
 
-
-
 app.listen(PORT, () => {
   console.log(`Server is running at ${HOSTNAME || "http://localhost"}:${PORT}`);
 });
