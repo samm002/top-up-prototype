@@ -63,6 +63,7 @@ export default {
       return response.data;
     } catch (error) {
       const err = error as Error;
+      console.error(err);
       throw new Error(err.message);
     }
   }
