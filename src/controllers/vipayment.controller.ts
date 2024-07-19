@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import { TopUpResponseInterface } from "@/utils/interface";
 import { VIPAYMENT_KEY, VIPAYMENT_SIGN  } from "@/utils/env";
@@ -37,6 +37,7 @@ export default {
       res.status(500).json({
         message: "Check nickname failed",
         error: err.message,
+        detail: err,
       });
     }
   },
@@ -50,32 +51,43 @@ export default {
     payload.append("service", service);
     payload.append("data_no", data_no);
   
-    try {
-      console.log("Top up start");
-      const response = await axios.post(vipaymenUrl, payload.toString(), {
+    try {  
+      return axios.post(vipaymenUrl, payload.toString(), {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
+      })
+      .then((response) => {
+        console.log("Top up success");
+        console.log("response :", response.data);
+    
+        return response.data;
+      })
+      .catch((error) => {
+        console.error("Error response data:", error.response?.data);
+        console.error("Error response status:", error.response?.status);
+        console.error("Error response headers:", error.response?.headers);
+        console.error("Error response:", error.response);
+        console.error("Error message:", error.message);
+    
+        throw new Error(error.message);
       });
-      console.log("Top up success");
-      console.log("response :", response.data);
-  
-      return response.data;
     } catch (error) {
-      // const err = error as Error;
+      const err = error as Error;
 
-      // console.error("error :", err.message);
-      // console.error("error done");
+      console.error("error :", err.message);
+      console.error("error done");
 
-      // throw new Error(err.message);
+      throw new Error(err.message);
 
-      const err = error as AxiosError;
-      console.error("Error response data:", err.response?.data);
-      console.error("Error response status:", err.response?.status);
-      console.error("Error response headers:", err.response?.headers);
-      console.error("Error message:", err.message);
+    //   const err = error as AxiosError;
+    //   console.error("Error response data:", err.response?.data);
+    //   console.error("Error response status:", err.response?.status);
+    //   console.error("Error response headers:", err.response?.headers);
+    //   console.error("Error message:", err.message);
       
-  throw new Error(err.message);
-    }
+    //   throw new Error(err.message);
+    // }
   }
+}
 }
