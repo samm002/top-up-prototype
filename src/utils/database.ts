@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { DATABASE_URL } from "./env";
+
+const DATABASE_URL = process.env.DATABASE_URL as string;
 
 const connect = async () => {
   try {

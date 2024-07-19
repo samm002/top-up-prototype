@@ -3,6 +3,7 @@ import * as Yup from "yup";
 const objectIdValidation = Yup.string().matches(/^[0-9a-fA-F]{24}$/, 'Invalid MongoDB ObjectId');
 
 const productValidation = Yup.object().shape({
+  name: Yup.string().required(),
   category: Yup.string().required(),
   service: Yup.string().required(),
   total: Yup.number().required(),
