@@ -21,7 +21,7 @@ export default {
       console.log("Checking nickname");
       const response = await axios.post(vipaymenUrl, payload.toString(), {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
       });
 
@@ -79,15 +79,6 @@ export default {
       console.error("error done");
 
       throw new Error(err.message);
-
-    //   const err = error as AxiosError;
-    //   console.error("Error response data:", err.response?.data);
-    //   console.error("Error response status:", err.response?.status);
-    //   console.error("Error response headers:", err.response?.headers);
-    //   console.error("Error message:", err.message);
-      
-    //   throw new Error(err.message);
-    // }
+    }
   }
-}
 }
